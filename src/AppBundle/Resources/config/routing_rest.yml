@@ -1,0 +1,3 @@
+api_cars:
+    resource: AppBundle\Controller\CarController
+    type: rest

@@ -1,0 +1,4 @@
+services:
+   car_manager:
+       class: AppBundle\Manager\CarManager
+       autowire: true
