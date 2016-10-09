@@ -94,5 +94,74 @@ class CarController extends Controller
 
     }
 
+    /**
+     * Delete car
+     *
+     * @ApiDoc(
+     *     section="Cars services",
+     *     description="Delete car",
+     *     requirements={
+     *      {"name"="id", "requirement"="\d+", "dataType"="integer", "required"=true, "description"="Car Id"},
+     *     },
+     *     statusCodes={
+     *      "202": "Deleted",
+     *      "400": "Error parameters"
+     *     }
+     * )
+     */
+    public function deleteAction($id){
+
+         /** @var CarManager $carManager */
+        $carManager = $this->get('car_manager');
+
+        $car = $carManager->loadCar($id);
+
+        if($car === null){
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
+
+
+        $car = $carManager->deleteCar($car);
+
+        return null;
+    }
+
+     /**
+     * Update car
+     *
+     * @ApiDoc(
+     *     section="Cars services",
+     *     description="Update car",
+     *     requirements={
+     *      {"name"="id", "requirement"="\d+", "dataType"="integer", "required"=true, "description"="Car Id"},
+     *     },
+     *    input={
+     *      "class"="AppBundle\Entity\Car"
+     *     },
+     *     statusCodes={
+     *      "204": "Created",
+     *      "400": "Error parameters",
+     *      "404": "Not found",
+     *     }
+     * )
+     */
+    public function putAction($id, Request $request){
+        
+
+        /** @var CarManager $carManager */
+        $carManager = $this->get('car_manager');
+        
+        $data = $request->request->all();
+
+        $car = $carManager->loadCar($id);
+        if($car === null){
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
+
+        $car = $carManager->updateCar($car, $data);
+
+        return null;
+    }
+
 
 }

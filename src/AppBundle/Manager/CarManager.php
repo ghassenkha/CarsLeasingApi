@@ -42,4 +42,24 @@ class CarManager
 
     }
 
+    public function deleteCar($data){
+        
+        $this->em->remove($data);
+        $this->em->flush();
+
+    }
+
+    public function updateCar($car, $data){
+        
+        $car
+            ->setName($data['name'])
+            ->setMarque($data['marque'])
+            ->setModel($data['model'])
+            ->setDescription($data['description']);
+
+
+        $this->em->persist($car);
+        $this->em->flush();
+    }
+
 }
